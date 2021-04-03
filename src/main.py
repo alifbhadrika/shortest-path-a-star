@@ -12,3 +12,6 @@ G2.printGraph()
 for i in range (G2.numVertices):
     for j in range (G2.numVertices):
         print(G2.adj[i][j])
+out = G2.computeAStar("Nitra","Itb")
+
+print(out)

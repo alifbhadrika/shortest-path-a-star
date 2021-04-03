@@ -55,8 +55,7 @@ class Graph:
     def addEdge(self, v1, v2):
         idx1 = self.findVertexIdx(v1)
         idx2 = self.findVertexIdx(v2)
-        self.adj[idx1][idx2] = self.calcDist(v1,v2)
-    
+        self.adj[idx1][idx2] = 1
     def syncAdj(self,adjmat):
         self.adj = adjmat
 
@@ -66,6 +65,12 @@ class Graph:
     def findVertexIdx(self, _name):
         for i in range (self.numVertices):
             if (self.vertices[i].name == _name):
+                return i
+        return -1
+
+    def findIdxByVertex(self,V):
+        for i in range(self.numVertices):
+            if(self.vertices[i].name == V.name):
                 return i
         return -1
     def printGraph(self):
@@ -91,6 +96,8 @@ class Graph:
     def generateSucc(self,current):
         succNode = []
         for i in range(self.numVertices):
+            if(self.adj[self.findIdxByVertex(current)][i] and i!=self.findIdxByVertex(current)):
+                self.vertices[i].parent = current
             if(self.vertices[i].parent == current):
                 succNode.append(self.vertices[i])
         return succNode
@@ -109,7 +116,6 @@ class Graph:
                 self.vertices[i].f = self.vertices[i].g + self.vertices[i].h
             currIdx = minFIdx(openList)
             currNode = openList[currIdx]
-            openList.pop(currIdx)
             closedList.append(currNode)
 
             if(currNode == dst): # found dest node
@@ -140,6 +146,8 @@ class Graph:
                 succNode.parent = currNode
 
             closedList.append(currNode)
+            openList.pop(currIdx)
+
         if(currNode != dst):
             return []
 
