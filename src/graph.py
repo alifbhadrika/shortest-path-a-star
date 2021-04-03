@@ -20,6 +20,9 @@ class Graph:
         newVertex = Vertex(_name, _lat, _long)
         self.vertices.append(newVertex)
     
+    def syncAdj(self,adjmat):
+        self.adj = adjmat
+
     def findVertexIdx(self, _name):
         for i in range (self.numVertices):
             if (self.vertices[i].name == _name):
@@ -29,16 +32,16 @@ class Graph:
         for i in range(self.numVertices):
             self.vertices[i].printInfo()
 
-    def calcDist(self,srcName,dstName): # in km , haversine
+    def calcDist(self,srcName,dstName): # in m , haversine
         src = self.vertices[self.findVertexIdx(srcName)]
         dst = self.vertices[self.findVertexIdx(dstName)]
         lat1 = math.radians(src.lat)
         lat2 = math.radians(dst.lat)
         long1 = math.radians(src.long)
         long2 = math.radians(dst.long)
-        deltaLat = math.radians(lat2 - lat1)
-        deltaLong=math.radians(long2 - long1)
-        a = math.sin(deltaLat/2)**2 + math.cos(lat1)*math.cos(lat2)*math.sin(deltaLong/2)**2
+        deltaLat = lat2 - lat1
+        deltaLong= long2 - long1
+        a = (math.sin(deltaLat/2))**2 + math.cos(lat1)*math.cos(lat2)*(math.sin(deltaLong/2))**2
         c = 2 * math.asin(math.sqrt(a))
-        return 6371 * c
-        
+        return 6371 * c * 1000
+    
