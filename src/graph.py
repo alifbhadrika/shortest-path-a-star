@@ -97,8 +97,6 @@ class Graph:
         succNode = []
         for i in range(self.numVertices):
             if(self.adj[self.findIdxByVertex(current)][i] and i!=self.findIdxByVertex(current)):
-                self.vertices[i].parent = current
-            if(self.vertices[i].parent == current):
                 succNode.append(self.vertices[i])
         return succNode
 
@@ -111,12 +109,12 @@ class Graph:
             self.vertices[i].h = self.haverDist(self.vertices[i],dst)
         src.f = src.h
         openList.append(src) # init
-        while(len(openList)>0):
+        emp = False
+        while(not emp):
             for i in range(self.numVertices):
                 self.vertices[i].f = self.vertices[i].g + self.vertices[i].h
             currIdx = minFIdx(openList)
             currNode = openList[currIdx]
-            closedList.append(currNode)
 
             if(currNode == dst): # found dest node
                 pathList = []
@@ -126,6 +124,7 @@ class Graph:
                     currentNode = currentNode.parent
                 return currNode.f,pathList[::-1]
             
+            openList.remove(currNode)
             succList = self.generateSucc(currNode)
             for succNode in succList:
                 tempCost = currNode.g + self.haverDist(currNode,succNode)
@@ -136,9 +135,9 @@ class Graph:
                 elif(succNode in closedList):
                     if(succNode.g <= tempCost):
                         continue
+                    succNodeIdx = closedList.index(succNode)
+                    closedList.remove(succNode)
                     openList.append(succNode)
-                    succNodeidx = closedList.index(succNode)
-                    closedList.pop(succNodeidx)
                 else:
                     openList.append(succNode)
                 
@@ -146,7 +145,8 @@ class Graph:
                 succNode.parent = currNode
 
             closedList.append(currNode)
-            openList.pop(currIdx)
+            if(len(openList)==0):
+                emp = True
 
         if(currNode != dst):
             return []
