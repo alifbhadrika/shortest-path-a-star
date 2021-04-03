@@ -110,8 +110,11 @@ class Graph:
         return succNode
 
     def computeAStar(self,srcName,dstName):
+        if(self.findVertexIdx(srcName)==-1 or self.findVertexIdx(dstName)==-1 ):
+            return []
         src = self.vertices[self.findVertexIdx(srcName)]  # src node
         dst = self.vertices[self.findVertexIdx(dstName)]  # dst node
+        
         openList =[] # visited node + not expanded (queue node)
         closedList =[] # visited + expanded node
         for i in range(self.numVertices): # init h distance
