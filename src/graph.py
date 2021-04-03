@@ -55,7 +55,7 @@ class Graph:
     def addEdge(self, v1, v2):
         idx1 = self.findVertexIdx(v1)
         idx2 = self.findVertexIdx(v2)
-        self.adj[idx1][idx2] = 1
+        self.adj[idx1][idx2] = self.calcDist(v1,v2)
     
     def syncAdj(self,adjmat):
         self.adj = adjmat
@@ -75,7 +75,7 @@ class Graph:
     def calcDist(self,srcName,dstName): # passer to haverDist
         src = self.vertices[self.findVertexIdx(srcName)]
         dst = self.vertices[self.findVertexIdx(dstName)]
-        self.haverDist(src,dst)
+        return self.haverDist(src,dst)
 
     def haverDist(self,src,dst): # in m , haversine
         lat1 = math.radians(src.lat)
@@ -96,21 +96,23 @@ class Graph:
         return succNode
 
     def computeAStar(self,srcName,dstName):
-        src = self.vertices[self.findVertexIdx(srcName)]
-        dst = self.vertices[self.findVertexIdx(dstName)]
-        openList =[]
-        closedList =[]
-        for i in range(self.numVertices):
+        src = self.vertices[self.findVertexIdx(srcName)]  # src node
+        dst = self.vertices[self.findVertexIdx(dstName)]  # dst node
+        openList =[] # visited node + not expanded (queue node)
+        closedList =[] # visited + expanded node
+        for i in range(self.numVertices): # init h distance
             self.vertices[i].h = self.haverDist(self.vertices[i],dst)
         src.f = src.h
-        openList.append(src)
+        openList.append(src) # init
         while(len(openList)>0):
+            for i in range(self.numVertices):
+                self.vertices[i].f = self.vertices[i].g + self.vertices[i].h
             currIdx = minFIdx(openList)
             currNode = openList[currIdx]
             openList.pop(currIdx)
             closedList.append(currNode)
 
-            if(currNode == dst):
+            if(currNode == dst): # found dest node
                 pathList = []
                 currentNode = currNode
                 while currentNode is not None:
@@ -124,7 +126,22 @@ class Graph:
                 if(succNode in openList):
                     if(succNode.g <= tempCost):
                         continue
-                    # incomplete
+                
+                elif(succNode in closedList):
+                    if(succNode.g <= tempCost):
+                        continue
+                    openList.append(succNode)
+                    succNodeidx = closedList.index(succNode)
+                    closedList.pop(succNodeidx)
+                else:
+                    openList.append(succNode)
+                
+                succNode.g = tempCost
+                succNode.parent = currNode
+
+            closedList.append(currNode)
+        if(currNode != dst):
+            return []
 
 
 
