@@ -39,6 +39,15 @@ class Vertex:
         self.g = 0 # cost so far to reach self
         self.h = 0 # estimated cost from self to goal
         self.parent = None
+
+    def getX(self):
+        x = 6371 * math.cos(self.lat) * math.cos(self.long)
+        return x
+
+    def getY(self):
+        y = 6371 * math.cos(self.lat) * math.sin(self.long)
+        return y
+        
     def printInfo(self):
         print(self.name,"Coordinate : (",self.lat,", ",self.long,")")
 
