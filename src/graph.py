@@ -1,12 +1,44 @@
 import math
+
+# file util
+def parseFile(filename):
+    with open('test/'+filename, "r") as file:
+        lines = file.readlines()
+        # get number of vertices from 1st line
+        numVertices = int(lines[0].strip())
+        G = Graph(numVertices)
+
+        # construct every vertex from line 2
+        for i in range(1, numVertices + 1):
+            vertexArgs = lines[i].strip().split(" ")
+            G.addVertex(vertexArgs[0], float(vertexArgs[1]), float(vertexArgs[2]))
+
+        # construct every edges from adj matrix
+        for i in range(numVertices + 1, len(lines)):
+            elmt = lines[i].strip().split(" ")
+            rowIdx = i - (numVertices + 1)
+            for j in range(numVertices):
+                if elmt[j] == '1':
+                    G.addEdge(G.findVertexByIdx(rowIdx), G.findVertexByIdx(j))
+
+    return G
+
+def minFIdx(list): # Search minimum f func index from a list
+    min = 0
+    for i in range(len(list)):
+        if(list[i].f < list[min].f):
+            min = i
+    return min
+
 class Vertex:
     def __init__(self, _name, _lat, _long):
         self.name = _name
         self.lat = _lat
         self.long = _long
-        self.f = 0
-        self.g = 0
-        self.h = 0
+        self.f = 0  #Estimated total cost of path from self to dst
+        self.g = 0 # cost so far to reach self
+        self.h = 0 # estimated cost from self to goal
+        self.parent = None
     def printInfo(self):
         print(self.name,"Coordinate : (",self.lat,", ",self.long,")")
 
@@ -19,10 +51,18 @@ class Graph:
     def addVertex(self, _name, _lat, _long):
         newVertex = Vertex(_name, _lat, _long)
         self.vertices.append(newVertex)
+
+    def addEdge(self, v1, v2):
+        idx1 = self.findVertexIdx(v1)
+        idx2 = self.findVertexIdx(v2)
+        self.adj[idx1][idx2] = 1
     
     def syncAdj(self,adjmat):
         self.adj = adjmat
 
+    def findVertexByIdx(self, idx):
+        return self.vertices[idx].name
+    
     def findVertexIdx(self, _name):
         for i in range (self.numVertices):
             if (self.vertices[i].name == _name):
@@ -32,9 +72,12 @@ class Graph:
         for i in range(self.numVertices):
             self.vertices[i].printInfo()
 
-    def calcDist(self,srcName,dstName): # in m , haversine
+    def calcDist(self,srcName,dstName): # passer to haverDist
         src = self.vertices[self.findVertexIdx(srcName)]
         dst = self.vertices[self.findVertexIdx(dstName)]
+        self.haverDist(src,dst)
+
+    def haverDist(self,src,dst): # in m , haversine
         lat1 = math.radians(src.lat)
         lat2 = math.radians(dst.lat)
         long1 = math.radians(src.long)
@@ -44,4 +87,46 @@ class Graph:
         a = (math.sin(deltaLat/2))**2 + math.cos(lat1)*math.cos(lat2)*(math.sin(deltaLong/2))**2
         c = 2 * math.asin(math.sqrt(a))
         return 6371 * c * 1000
-    
+
+    def generateSucc(self,current):
+        succNode = []
+        for i in range(self.numVertices):
+            if(self.vertices[i].parent == current):
+                succNode.append(self.vertices[i])
+        return succNode
+
+    def computeAStar(self,srcName,dstName):
+        src = self.vertices[self.findVertexIdx(srcName)]
+        dst = self.vertices[self.findVertexIdx(dstName)]
+        openList =[]
+        closedList =[]
+        for i in range(self.numVertices):
+            self.vertices[i].h = self.haverDist(self.vertices[i],dst)
+        src.f = src.h
+        openList.append(src)
+        while(len(openList)>0):
+            currIdx = minFIdx(openList)
+            currNode = openList[currIdx]
+            openList.pop(currIdx)
+            closedList.append(currNode)
+
+            if(currNode == dst):
+                pathList = []
+                currentNode = currNode
+                while currentNode is not None:
+                    pathList.append(currentNode.name)
+                    currentNode = currentNode.parent
+                return currNode.f,pathList[::-1]
+            
+            succList = self.generateSucc(currNode)
+            for succNode in succList:
+                tempCost = currNode.g + self.haverDist(currNode,succNode)
+                if(succNode in openList):
+                    if(succNode.g <= tempCost):
+                        continue
+                    # incomplete
+
+
+
+
+        
