@@ -171,10 +171,12 @@ class Graph:
                             Gr.add_node(self.vertices[i].name, pos = (self.vertices[i].coorX, self.vertices[i].coorY))
                         if self.vertices[j].name not in Gr.nodes():
                             Gr.add_node(self.vertices[j].name, pos = (self.vertices[j].coorX, self.vertices[j].coorY))
+
+                        formatted_weight = "{:.3f}".format(self.adj[i][j]/1000)
                         if (self.vertices[i].name and self.vertices[j].name) in path:
-                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = self.adj[i][j], relation = 'inPath')
+                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = formatted_weight, relation = 'inPath')
                         else:
-                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = self.adj[i][j], relation = 'notinPath')
+                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = formatted_weight, relation = 'notinPath')
                 else:
                     continue
 
@@ -192,27 +194,6 @@ class Graph:
 
             nx.draw_networkx(Gr, pos, node_color = node_color, edge_color=[edge_color[x] for x in relation.values()])
             nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
-
-    # def visualize(self):
-    #     Gr = nx.Graph()
-    #     for i in range (self.numVertices):
-    #         for j in range (self.numVertices):
-    #             if (i<j):
-    #                 if (adj[i][j] != 0):
-    #                     if self.vertices[i].name not in Gr.nodes():
-    #                         Gr.add_node(self.vertices[i].name, pos=(self.vertices[i].getX, self.vertices[i].getY))
-    #                     if self.vertices[j].name not in Gr.nodes():
-    #                         Gr.add_node(self.vertices[j].name, pos=(self.vertices[j].getX, self.vertices[j].getY))
-    #                     Gr.add_edge(self.vertices[i].name, self.vertices[j].name, self.adj[i][j])
-    #             else:
-    #                 break
-
-    #     weight = nx.get_edge_attributes(Gr, 'weight')
-    #     pos = nx.get_node_attributes(Gr, 'pos')
-        
-
-    #     nx.draw_networkx(Gr, pos)
-    #     nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
             
 
 
