@@ -26,7 +26,7 @@ def start():
     except:
         print("Node not Found. Exiting program . . .")
         sys.exit()
-    if len(out[1]) == 0:
+    if len(out) == 0:
         print("THERE'S NO WAY YOU CAN GO FROM ", nodes[src-1].name," TO ",nodes[dest-1].name)
         print()
     else:

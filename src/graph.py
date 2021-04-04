@@ -224,12 +224,11 @@ class Graph:
         for i in range (self.numVertices): # Initial Node+edge adder
             for j in range (self.numVertices):
                 if (i<j):
+                    if self.vertices[i].name not in Gr.nodes():
+                        Gr.add_node(self.vertices[i].name, pos = (self.vertices[i].coorX, self.vertices[i].coorY))
+                    if self.vertices[j].name not in Gr.nodes():
+                        Gr.add_node(self.vertices[j].name, pos = (self.vertices[j].coorX, self.vertices[j].coorY))
                     if (self.adj[i][j] != 0):
-                        if self.vertices[i].name not in Gr.nodes():
-                            Gr.add_node(self.vertices[i].name, pos = (self.vertices[i].coorX, self.vertices[i].coorY))
-                        if self.vertices[j].name not in Gr.nodes():
-                            Gr.add_node(self.vertices[j].name, pos = (self.vertices[j].coorX, self.vertices[j].coorY))
-
                         formatted_weight = "{:.3f}".format(self.adj[i][j]/1000)
                         Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = formatted_weight, relation = 'notinPath')
                 else:
