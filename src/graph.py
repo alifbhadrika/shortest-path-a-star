@@ -37,21 +37,15 @@ class Vertex:
         self.name = _name
         self.lat = _lat
         self.long = _long
+        self.coorX = 6371 * math.cos(_lat) * math.cos(_long)
+        self.coorY = 6371 * math.cos(_lat) * math.sin(_long)
         self.f = 0  #Estimated total cost of path from self to dst
         self.g = 0 # cost so far to reach self
         self.h = 0 # estimated cost from self to goal
         self.parent = None
 
-    def getX(self):
-        x = 6371 * math.cos(self.lat) * math.cos(self.long)
-        return x
-
-    def getY(self):
-        y = 6371 * math.cos(self.lat) * math.sin(self.long)
-        return y
-        
     def printInfo(self):
-        print(self.name,"Coordinate : (",self.lat,", ",self.long,")")
+        print(self.name,"Coordinate : (",self.lat,", ",self.long,") : Cartesian (",self.coorX,", ",self.coorY)
 
 class Graph:
     def __init__(self, _numVertices):
@@ -66,7 +60,8 @@ class Graph:
     def addEdge(self, v1, v2):
         idx1 = self.findVertexIdx(v1)
         idx2 = self.findVertexIdx(v2)
-        self.adj[idx1][idx2] = 1
+        self.adj[idx1][idx2] = self.calcDist(v1,v2)
+
     def syncAdj(self,adjmat):
         self.adj = adjmat
 
@@ -171,26 +166,53 @@ class Graph:
         for i in range (self.numVertices):
             for j in range (self.numVertices):
                 if (i<j):
-                    if (adj[i][j] != 0):
+                    if (self.adj[i][j] != 0):
                         if self.vertices[i].name not in Gr.nodes():
-                            Gr.add_node(self.vertices[i].name, pos=(self.vertices[i].getX, self.vertices[i].getY))
+                            Gr.add_node(self.vertices[i].name, pos = (self.vertices[i].coorX, self.vertices[i].coorY))
                         if self.vertices[j].name not in Gr.nodes():
-                            Gr.add_node(self.vertices[j].name, pos=(self.vertices[j].getX, self.vertices[j].getY))
-                        if (self.vertices[i].name, self.vertices[j].name) in path:
-                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, self.adj[i][j], relation='inPath')
+                            Gr.add_node(self.vertices[j].name, pos = (self.vertices[j].coorX, self.vertices[j].coorY))
+                        if (self.vertices[i].name and self.vertices[j].name) in path:
+                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = self.adj[i][j], relation = 'inPath')
                         else:
-                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, self.adj[i][j], relation='notinPath')
+                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = self.adj[i][j], relation = 'notinPath')
                 else:
-                    break
+                    continue
 
-        edge_color = {'inPath' : 'blue', 'notinPath' : 'red'}
-        weight = nx.get_edge_attributes(Gr, 'weight')
-        pos = nx.get_node_attributes(Gr, 'pos')
-        relation = nx.get_edge_attributes(Gr, 'relation')
+            edge_color = {'inPath' : 'red', 'notinPath' : 'blue'}
+            node_color = []
+            for node in Gr.nodes():
+                if node in path:
+                    node_color.append('red')
+                else: 
+                    node_color.append('blue')
+
+            weight = nx.get_edge_attributes(Gr, 'weight')
+            pos = nx.get_node_attributes(Gr, 'pos')
+            relation = nx.get_edge_attributes(Gr, 'relation')
+
+            nx.draw_networkx(Gr, pos, node_color = node_color, edge_color=[edge_color[x] for x in relation.values()])
+            nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
+
+    # def visualize(self):
+    #     Gr = nx.Graph()
+    #     for i in range (self.numVertices):
+    #         for j in range (self.numVertices):
+    #             if (i<j):
+    #                 if (adj[i][j] != 0):
+    #                     if self.vertices[i].name not in Gr.nodes():
+    #                         Gr.add_node(self.vertices[i].name, pos=(self.vertices[i].getX, self.vertices[i].getY))
+    #                     if self.vertices[j].name not in Gr.nodes():
+    #                         Gr.add_node(self.vertices[j].name, pos=(self.vertices[j].getX, self.vertices[j].getY))
+    #                     Gr.add_edge(self.vertices[i].name, self.vertices[j].name, self.adj[i][j])
+    #             else:
+    #                 break
+
+    #     weight = nx.get_edge_attributes(Gr, 'weight')
+    #     pos = nx.get_node_attributes(Gr, 'pos')
         
 
-        nx.draw_networkx(Gr, pos, edge_color=[edge_color[x] for x in relation.values()])
-        nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
+    #     nx.draw_networkx(Gr, pos)
+    #     nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
             
 
 

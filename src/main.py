@@ -2,14 +2,16 @@ import graph
 import math
 
 def test():
-    G2 = graph.parseFile("test1.txt")
+    G2 = graph.parseFile("test2.txt")
     G2.printGraph()
     for i in range (G2.numVertices):
         for j in range (G2.numVertices):
-            print(G2.adj[i][j])
+            print("{:4f}".format(G2.adj[i][j]), end=" ")
+        print()
 
-    print(G2.calcDist("Nitra","Sadikin"))
-    out = G2.computeAStar("Nitra","Sadikin")
+    print(G2.calcDist("A","F"))
+    out = G2.computeAStar("A","F")
+
+    G2.visualize(out)
 
     print(out)
-    G2.visualize(out)
