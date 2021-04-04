@@ -162,7 +162,6 @@ class Graph:
             return []
 
     def visualize(self, aStarPath = None):
-        sns.set()
         if aStarPath is None:
             path = []
         else:
@@ -185,20 +184,21 @@ class Graph:
                 else:
                     continue
 
-            edge_color = {'inPath' : 'red', 'notinPath' : 'blue'}
-            node_color = []
-            for node in Gr.nodes():
-                if node in path:
-                    node_color.append('red')
-                else: 
-                    node_color.append('blue')
+        edge_color = {'inPath' : 'red', 'notinPath' : 'blue'}
+        node_color = []
+        for node in Gr.nodes():
+            if node in path:
+                node_color.append('red')
+            else: 
+                node_color.append('blue')
 
-            weight = nx.get_edge_attributes(Gr, 'weight')
-            pos = nx.get_node_attributes(Gr, 'pos')
-            relation = nx.get_edge_attributes(Gr, 'relation')
+        weight = nx.get_edge_attributes(Gr, 'weight')
+        pos = nx.get_node_attributes(Gr, 'pos')
+        relation = nx.get_edge_attributes(Gr, 'relation')
 
-            nx.draw_networkx(Gr, pos, node_color = node_color, edge_color=[edge_color[x] for x in relation.values()])
-            nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
+        nx.draw_networkx(Gr, pos, node_color = node_color, edge_color=[edge_color[x] for x in relation.values()])
+        nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
+        plt.show()
             
 
 

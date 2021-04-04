@@ -1,17 +1,6 @@
 import graph
 import math
 
-def test():
-    G2 = graph.parseFile("dago.txt")
-    G2.printGraph()
-    for i in range (G2.numVertices):
-        for j in range (G2.numVertices):
-            print("{:4f}".format(G2.adj[i][j]), end=" ")
-        print()
-
-    # visualize graph tanpa path
-    G2.visualize()
-
 def start():
     print("#### A* Shortest Path Finder ####")
     filename = input("ENTER MAP NAME: ")
