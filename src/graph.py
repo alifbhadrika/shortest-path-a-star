@@ -1,4 +1,6 @@
 import math
+import networkx as nx
+import matplotlib.pyplot as plt
 
 # file util
 def parseFile(filename):
@@ -162,6 +164,34 @@ class Graph:
 
         if(currNode != dst):
             return []
+
+    def visualize(self, aStar):
+        path = aStar[1]
+        Gr = nx.Graph()
+        for i in range (self.numVertices):
+            for j in range (self.numVertices):
+                if (i<j):
+                    if (adj[i][j] != 0):
+                        if self.vertices[i].name not in Gr.nodes():
+                            Gr.add_node(self.vertices[i].name, pos=(self.vertices[i].getX, self.vertices[i].getY))
+                        if self.vertices[j].name not in Gr.nodes():
+                            Gr.add_node(self.vertices[j].name, pos=(self.vertices[j].getX, self.vertices[j].getY))
+                        if (self.vertices[i].name, self.vertices[j].name) in path:
+                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, self.adj[i][j], relation='inPath')
+                        else:
+                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, self.adj[i][j], relation='notinPath')
+                else:
+                    break
+
+        edge_color = {'inPath' : 'blue', 'notinPath' : 'red'}
+        weight = nx.get_edge_attributes(Gr, 'weight')
+        pos = nx.get_node_attributes(Gr, 'pos')
+        relation = nx.get_edge_attributes(Gr, 'relation')
+        
+
+        nx.draw_networkx(Gr, pos, edge_color=[edge_color[x] for x in relation.values()])
+        nx.draw_networkx_edge_labels(Gr, pos, edge_labels = weight)
+            
 
 
 
