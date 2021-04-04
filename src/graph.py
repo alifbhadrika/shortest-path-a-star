@@ -1,10 +1,11 @@
 import math
 import networkx as nx
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # file util
 def parseFile(filename):
-    with open('../test/'+filename, "r") as file:
+    with open('../test/'+filename+".txt", "r") as file:
         lines = file.readlines()
         # get number of vertices from 1st line
         numVertices = int(lines[0].strip())
@@ -160,8 +161,12 @@ class Graph:
         if(currNode != dst):
             return []
 
-    def visualize(self, aStar):
-        path = aStar[1]
+    def visualize(self, aStarPath = None):
+        sns.set()
+        if aStarPath is None:
+            path = []
+        else:
+            path = aStarPath
         Gr = nx.Graph()
         for i in range (self.numVertices):
             for j in range (self.numVertices):
