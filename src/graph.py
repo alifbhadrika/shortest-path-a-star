@@ -5,7 +5,6 @@ Cr : Mohammad Sheva Almeyda Sofjan (13519018/K01) | Alif Bhadrika Parikesit (135
 import math
 import networkx as nx
 import matplotlib.pyplot as plt
-import seaborn as sns
 import sys
 
 # file util
