@@ -177,12 +177,14 @@ class Graph:
                             Gr.add_node(self.vertices[j].name, pos = (self.vertices[j].coorX, self.vertices[j].coorY))
 
                         formatted_weight = "{:.3f}".format(self.adj[i][j]/1000)
-                        if (self.vertices[i].name and self.vertices[j].name) in path:
-                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = formatted_weight, relation = 'inPath')
-                        else:
-                            Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = formatted_weight, relation = 'notinPath')
+                        Gr.add_edge(self.vertices[i].name, self.vertices[j].name, weight = formatted_weight, relation = 'notinPath')
                 else:
                     continue
+
+        if(aStarPath is not None) :      
+            for i in range(len(path) - 1):
+                f_weight = "{:.3f}".format(self.adj[i][i+1]/1000)
+                Gr.add_edge(path[i],path[i+1],weight = f_weight,relation = 'inPath')
 
         edge_color = {'inPath' : 'red', 'notinPath' : 'blue'}
         node_color = []
