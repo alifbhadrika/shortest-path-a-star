@@ -27,5 +27,5 @@ Semester II tahun 2020/2021
 ```
 
 ## Authors
-M. Sheva Almeyda Sofjan - 13519018/K01
-Alif Bhadrika Parikesit - 13519186/K04 
+- M. Sheva Almeyda Sofjan - 13519018/K01
+- Alif Bhadrika Parikesit - 13519186/K04 
