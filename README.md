@@ -4,6 +4,12 @@
 Tugas Kecil 3 IF2211 Strategi Algoritma
 Semester II tahun 2020/2021
 
+## Table of contents
+* [Algorithm](#algorithm)
+* [System requirements](#system-requirements)
+* [How to use](#how-to-use)
+* [Authors](#authors)
+
 ## Algorithm
 A* (A-Star) merupakan algoritma pencarian path/lintasan terpendek dari suatu simpul start ke simpul tujuan pada suatu graf, dengan ide untuk mencari path ke simpul tujuan yang memiliki cost(jarak tempuh) seminimum mungkin dengan menghindari ekspansi path yang memiliki estimasi cost yang tidak minimum.
 
