@@ -1,14 +1,20 @@
 # Shortest Path with A* Algorithm
 > Program to perform A* search algorithm to find the shortest path from node source to destination
 
-Tugas Kecil 3 IF2211 Strategi Algoritma
-Semester II tahun 2020/2021
-
 ## Table of contents
-* [Algorithm](#algorithm)
+* [General Info](#algorithm)
 * [System requirements](#system-requirements)
 * [How to use](#how-to-use)
 * [Authors](#authors)
+
+## General Info
+Program dibuat untuk memnuhi Tugas Kecil 3 IF2211 Strategi Algoritma Semester II tahun 2020/2021. Program menerima file external dengan format tertentu, berisi jumlah node, nama node dan koordinat latitude dan longitude suatu tempat, dan adjacency matrix untuk menunjukan keterhubungan tiap node. Program menerima input node asal dan tujuan. Program akan menentukan shortest path berdasarkan algoritma A* dan menampilkan visualisasinya dalam struktur graf. Node dan edge yang diberi warna merah merupakan node dan edge lintasan terpendek.
+
+## Features
+- Menentukan lintasan terpendek dan jaraknya
+- Menampilkan visualisasi node pada peta dalam representasi graf
+
+## Screenshot
 
 ## Algorithm
 A* (A-Star) merupakan algoritma pencarian path/lintasan terpendek dari suatu simpul start ke simpul tujuan pada suatu graf, dengan ide untuk mencari path ke simpul tujuan yang memiliki cost(jarak tempuh) seminimum mungkin dengan menghindari ekspansi path yang memiliki estimasi cost yang tidak minimum.
@@ -22,9 +28,15 @@ Langkah-langkah pada Algoritma A* :
 4. Ekspansi simpul yang belum dikunjungi dengan f(n) minimum
 5. Ulangi langkah 3-4 hingga simpul tujuan dikunjungi (dengan f(n) minimum) atau hingga dapat disimpulkan tidak terdapat path dari simpul start ke simpul tujuan
 
+## Technologies
+- python3
+- networkx module
+- matplotlib module
+
 ## System requirements
 1. Make sure you have python installed in your device. Download python **[here](https://www.python.org/downloads/)**.
-2. Install matplotlib
+2. Install pip. Check **[this](https://pip.pypa.io/en/stable/installing/)**.
+3. Install matplotlib
 ```
     $ pip install matplotlib
 ```
@@ -61,7 +73,12 @@ SimpangPRayaPUtara -6.95476406184648 107.66268484090399
 ```
     $ python main.py
 ```
+## Status
+Project is finished.
+
+## Inspiration
+
 
 ## Authors
 - M. Sheva Almeyda Sofjan - 13519018/K01
-- Alif Bhadrika Parikesit - 13519186/K04 
+- Alif Bhadrika Parikesit - 13519186/K04  
