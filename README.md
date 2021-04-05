@@ -77,7 +77,7 @@ SimpangPRayaPUtara -6.95476406184648 107.66268484090399
 Project is finished.
 
 ## Inspiration
-
+**[A* Algorithm](https://mat.uab.cat/~alseda/MasterOpt/AStar-Algorithm.pdf)**
 
 ## Authors
 - M. Sheva Almeyda Sofjan - 13519018/K01
