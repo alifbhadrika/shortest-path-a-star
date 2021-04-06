@@ -2,9 +2,15 @@
 > Program to perform A* search algorithm to find the shortest path from node source to destination
 
 ## Table of contents
-* [General Info](#algorithm)
+* [General Info](#general-info)
+* [Features](#features)
+* [Screenshot](#screenshot)
+* [Algorithm](#algorithm)
+* [Technologies](#technologies)
 * [System requirements](#system-requirements)
 * [How to use](#how-to-use)
+* [Status](#status)
+* [Inspiration](#inspiration)
 * [Authors](#authors)
 
 ## General Info
