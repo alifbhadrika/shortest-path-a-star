@@ -21,6 +21,8 @@ Program dibuat untuk memnuhi Tugas Kecil 3 IF2211 Strategi Algoritma Semester II
 - Menampilkan visualisasi node pada peta dalam representasi graf
 
 ## Screenshot
+![graph visualization](https://i.ibb.co/0cQRTv8/assets1.png)
+![path visualization](https://i.ibb.co/48Yg5qS/assets2.png)
 
 ## Algorithm
 A* (A-Star) merupakan algoritma pencarian path/lintasan terpendek dari suatu simpul start ke simpul tujuan pada suatu graf, dengan ide untuk mencari path ke simpul tujuan yang memiliki cost(jarak tempuh) seminimum mungkin dengan menghindari ekspansi path yang memiliki estimasi cost yang tidak minimum.
@@ -79,6 +81,13 @@ SimpangPRayaPUtara -6.95476406184648 107.66268484090399
 ```
     $ python main.py
 ```
+4. Enter your filename, format filename.txt
+5. Program will show the visualization, to continue the program, exit the visualization
+6. Select source and destination node
+7. Program will show the route, distance, and its visualization. Exit the visualization to continue.
+8. End of the program.
+
+
 ## Status
 Project is finished.
 
