@@ -15,7 +15,7 @@ def start():
     G.visualize() 
 
     nodes = [node for node in G.vertices]
-    print("\nPLACES AT",filename.upper())
+    print("\nPLACES AT",filename.split('.')[0].upper())
     for i in range (len(nodes)):
         print("[",i+1,"]", nodes[i].name)
 
