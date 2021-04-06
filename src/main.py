@@ -9,7 +9,7 @@ import sys
 
 def start():
     print("#### A* Shortest Path Finder ####")
-    filename = input("ENTER MAP NAME: ")
+    filename = input("ENTER MAP NAME (map.txt): ")
     G = graph.parseFile(filename)
 
     G.visualize() 

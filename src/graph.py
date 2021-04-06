@@ -13,7 +13,7 @@ def parseFile(filename):
     File Parser
     '''
     try:
-        with open('../test/'+filename+".txt", "r") as file:
+        with open('../test/'+filename, "r") as file:
             lines = file.readlines()
             # get number of vertices from 1st line
             numVertices = int(lines[0].strip())
