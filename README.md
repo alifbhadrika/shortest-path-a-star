@@ -54,7 +54,7 @@ Langkah-langkah pada Algoritma A* :
 ```
 
 ## How to use
-1. Add or customize input text file in test folder
+1. Add or customize input text file in test folder.
 ```
 Text file format:
 
@@ -76,8 +76,8 @@ SimpangPRayaPUtara -6.95476406184648 107.66268484090399
 0 0 0 0 0 0 0 1
 0 0 0 0 1 1 1 0
 ``` 
-2. Open src folder in terminal
-3. Run main.py
+2. Open src folder in terminal.
+3. Run main.py from shell or simply just click  main.py.
 ```
     $ python main.py
 ```
